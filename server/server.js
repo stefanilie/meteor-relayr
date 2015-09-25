@@ -1,3 +1,4 @@
+// TODO: Refactor all methods into one and add case switch.
 //Setting up Collections and publishes
 Sounds = new Mongo.Collection('sounds')
 
@@ -264,7 +265,7 @@ Meteor.methods({
   },
   'group': function(token, clientID) {
     var toReturn;
-    HTTP.call('POST', 'https://api.relayr.io/groups', {
+    toReturn = HTTP.call('POST', 'https://api.relayr.io/groups', {
       headers: {
         "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
         "Content-Type": 'application/json'
@@ -272,11 +273,16 @@ Meteor.methods({
       data: {
         "name": "MyGroup 01",
       }
-    }, function(err, result) {
-      if (!err) {
-        // console.log(result);
-        console.log(result['data']);
-        toReturn = result['data'];
+    });
+    return toReturn;
+  },
+  'deleteGroups': function(token, clientID){
+    console.log("trying to delete groups");
+    var toReturn;
+    toReturn = HTTP.call('DELETE', 'https://api.relayr.io/groups', {
+      headers: {
+        "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
+        "Content-Type": 'application/json'
       }
     });
     return toReturn;
@@ -307,6 +313,7 @@ Meteor.methods({
         console.log(result);
         results['temp2'] = result;
       } else {
+        console.log("e eroare boss!!!!!");
         console.log(err);
         return err;
       }
