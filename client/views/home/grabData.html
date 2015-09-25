@@ -1,0 +1,25 @@
+<template name="grabData">
+  <form class="wunderbarSettings" method="post">
+    Application ID :
+    <input type="text" id="applicationID" value="a683462a-9b29-453d-ab58-ef96293c70e4" />
+    <br> Application Token :
+    <input type="text" id="applicationToken" value="jgMoQ.QuGvq5oXIl0Rczrl0EROWIQN1S" />
+    <br> Sensor DeviceID :
+    <input type="text" id="deviceID" value="85fa69d0-8bb5-4400-94ea-ede7f960ca64" />
+    <br> Reading type :
+    <select id="selectReadingType">
+      <option value="ALL">All</option>
+      <option value="TEMP">Temperature & Humidity</option>
+      <option value="SND">Noise level</option>
+      <option value="LIGH">Liminosity Color and Proximity</option>
+    </select>
+    <br>
+    <button type="button" class="btn btn-default" id="ciorba">Start gettin' data</button>
+  </form>
+  <input type="button" class="closeConnection" value="Stop grabing data">
+  <button type="button" class="btn btn-default" id="SAPLoad">SAP</button>
+  <button type="button" class="btn btn-default" id="group">Group stuff up!</button>
+  <button type="button" class="btn btn-default" id="additems">Add devices to group</button>
+  <button type="button" class="btn btn-default" id="history">getHist</button>
+
+</template>

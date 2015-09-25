@@ -1,0 +1,37 @@
+<head>
+  <title>meteor-relayr</title>
+  <script src="https://developer.relayr.io/relayr-browser-sdk.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="stylesheets/bootstrap.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1> BearingPoint WunderBar Proof of Concept</h1>
+    {{> grabData }}
+    <div class="row">
+      <div class="col-md-4">
+        <div id="div-sounds">
+          {{#each sounds}} {{> sound}} {{/each}}
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div id="div-temperatures">
+          {{#each temperatures}} {{> temperature}} {{/each}}
+          <br> {{#each humidities}} {{> humidity}} {{/each}}
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div id="div-lcp">
+          {{#each colors}} {{> color}} {{/each}}
+          <br> {{#each luminosities}} {{> luminosity}} {{/each}}
+          <br> {{#each proximities}} {{> proximity}} {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
