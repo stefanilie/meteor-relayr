@@ -8,7 +8,7 @@ Simple MeteorJS app for prototyping the WunderBar and the Relayr Cloud features.
 
 Meteor is dead simple to setup and to code in. It's easy as:
 
-1. Fire up a terminal window and paste this ```https://github.com/stefanilie/meteor-relayr```
+1. Fire up a terminal window and paste this ```git clone https://github.com/stefanilie/meteor-relayr```
 2. Install meteor
   * OS X or Linux ```curl https://install.meteor.com/ | sh```
   * Windows https://install.meteor.com/windows
