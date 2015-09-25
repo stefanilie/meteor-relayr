@@ -277,15 +277,20 @@ Meteor.methods({
     return toReturn;
   },
   'deleteGroups': function(token, clientID){
-    console.log("trying to delete groups");
-    var toReturn;
-    toReturn = HTTP.call('DELETE', 'https://api.relayr.io/groups', {
-      headers: {
-        "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
-        "Content-Type": 'application/json'
-      }
-    });
-    return toReturn;
+    try {
+      console.log(" to delete groups");
+      var toReturn;
+      toReturn = HTTP.call('DELETE', 'https://api.relayr.io/users/'+clientID+'/groups/ ', {
+        headers: {
+          "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
+          "Content-Type": 'application/json'
+        }
+      });
+      return toReturn;
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
   },
   'additems': function(token, deviceIDs, GroupID) {
     var results={};

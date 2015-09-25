@@ -160,16 +160,20 @@ Template.grabData.events({
       }
     })
   },
-  'click #deleteGroups': function(event){
-    console.log("trying to delete groups");
-    var clientID = "1e76f397-c940-4f88-a439-cfb4c950329d";
-    var token = "1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV";
-    Meteor.call('deleteGroups', token, clientID, function(err, results){
-      if(!err){
-        console.log(results);
-        alert("Deleted all groups!")
-      }
-    });
+  'click #deleteGroups': function(event) {
+    try {
+      console.log("trying to delete groups");
+      var clientID = "1e76f397-c940-4f88-a439-cfb4c950329d";
+      var token = "1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV";
+      Meteor.call('deleteGroups', token, clientID, function(err, results) {
+        if (!err) {
+          console.log(results);
+          alert("Deleted all groups!")
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
   },
   'click #additems': function(event) {
     var deviceIDs = {
