@@ -31,6 +31,7 @@ Meteor.subscribe('tempPublications');
 Meteor.subscribe('humidPublications');
 
 GroupID = ""
+Created = false;
 
 Template.body.helpers({
   luminosities: function() {
@@ -151,14 +152,25 @@ Template.grabData.events({
   'click #group': function(event) {
     var clientID = "1e76f397-c940-4f88-a439-cfb4c950329d";
     var token = "1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV";
-    Meteor.call('group', token, clientID, function(err, results) {
-      if (!err) {
-        console.log(results['data']);
-        results = results['data'];
-        GroupID = results['id'];
-        alert("Group with credentials created:\n" + "id: " + results['id'] + "\n name: " + results['name'] + "\nowner: " + results['owner']);
-      }
-    })
+    if (!Created) {
+      Meteor.call('group', token, clientID, function(err, results) {
+        if (!err) {
+          console.log(results['data']);
+          results = results['data'];
+          GroupID = results['id'];
+          console.log("ID:" + GroupID);
+          alert("Group with credentials created:\n" + "id: " + results['id'] + "\n name: " + results['name'] + "\nowner: " + results['owner']);
+        }
+      })
+      Created = true;
+      document.getElementById('group').innerHTML = "Group info";
+    } else {
+      Meteor.call('getGroup', token, clientID, GroupID, function(err, results) {
+        if(!err){
+          console.log(results);
+        }
+      });
+    }
   },
   'click #deleteGroups': function(event) {
     try {
@@ -169,6 +181,7 @@ Template.grabData.events({
         if (!err) {
           console.log(results);
           alert("Deleted all groups!")
+          document.getElementById('group').innerHTML = "1. Create group";
         }
       });
     } catch (e) {
@@ -185,13 +198,22 @@ Template.grabData.events({
     var wunderbar1 = "1e76f397-c940-4f88-a439-cfb4c950329d";
     var wunderbar2 = "a5f161f5-21fb-4602-99b4-46c9e06a0e02";
 
-    Meteor.call('additems', token, deviceIDs, GroupID, function(err, results) {
+    Meteor.call('additems', token, deviceIDs, clientID, GroupID, function(err, results) {
       if (!err) {
         console.log(results);
         alert("devices added successfully");
       }
     })
   },
+  'click #history': function(event){
+    var clientID = "1e76f397-c940-4f88-a439-cfb4c950329d";
+    var token = "1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV";
+    Meteor.call('history', token, clientID, GroupID, function(err, results){
+      if(!err){
+        console.log(results);
+      }
+    });
+  }
   'click #SAPLoad': function(event) {
     console.log("SAP");
     try {

@@ -276,11 +276,11 @@ Meteor.methods({
     });
     return toReturn;
   },
-  'deleteGroups': function(token, clientID){
+  'deleteGroups': function(token, clientID) {
     try {
       console.log(" to delete groups");
       var toReturn;
-      toReturn = HTTP.call('DELETE', 'https://api.relayr.io/users/'+clientID+'/groups/ ', {
+      toReturn = HTTP.call('DELETE', 'https://api.relayr.io/users/' + clientID + '/groups/ ', {
         headers: {
           "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
           "Content-Type": 'application/json'
@@ -292,37 +292,67 @@ Meteor.methods({
       return e;
     }
   },
-  'additems': function(token, deviceIDs, GroupID) {
-    var results={};
-    HTTP.call('POST', 'https://api.relayr.io/groups/'+GroupID+'/devices/'+deviceIDs['tempSensor1'], {
+  'additems': function(token, deviceIDs, clientID, GroupID) {
+    var results = {};
+    var url = 'https://api.relayr.io/groups/'+GroupID;
+    HTTP.call('POST', url, {
       headers: {
         "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
         "Content-Type": 'application/json'
       },
+      data: {
+        "deviceIds": [deviceIDs['tempSensor1'], deviceIDs['tempSensor2']]
+      }
     }, function(err, result) {
       if (!err) {
         console.log(result);
-        results['temp1'] = result;
+        results = result;
       } else {
         console.log(err);
         return err;
       }
-    })
-    HTTP.call('POST', 'https://api.relayr.io/groups/'+GroupID+'/devices/'+deviceIDs['tempSensor2'], {
+    });
+    return results;
+  },
+  'history': function(token, clientID, GroupID) {
+    var results;
+    var url = 'https://data.relayr.io/device-data/history/groups/'+GroupID;
+    HTTP.call('GET', url, {
       headers: {
         "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
         "Content-Type": 'application/json'
       },
+      data: {
+        "start":
+      }
     }, function(err, result) {
       if (!err) {
         console.log(result);
-        results['temp2'] = result;
+        results = result;
       } else {
-        console.log("e eroare boss!!!!!");
         console.log(err);
         return err;
       }
-    })
+    });
+    return results;
+  },
+  'getGroup': function(token, clientID, GroupID) {
+    var results;
+    var url = 'https://api.relayr.io/groups/'+GroupID;
+    HTTP.call('GET', url, {
+      headers: {
+        "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
+        "Content-Type": 'application/json'
+      }
+    }, function(err, result) {
+      if (!err) {
+        console.log(result);
+        results = result;
+      } else {
+        console.log(err);
+        return err;
+      }
+    });
     return results;
   },
   'upload_to_sap': function() {
