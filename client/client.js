@@ -176,6 +176,8 @@ Template.grabData.events({
     }
   },
   'click #additems': function(event) {
+    var clientID = "1e76f397-c940-4f88-a439-cfb4c950329d";
+    var token = "1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV";
     var deviceIDs = {
       "tempSensor1": "85fa69d0-8bb5-4400-94ea-ede7f960ca64",
       "tempSensor2": "ddd458cd-b6d0-4f2f-a370-a988a3a69e40"
