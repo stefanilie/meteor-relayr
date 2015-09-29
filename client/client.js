@@ -1,19 +1,3 @@
-// TODO: delete the following groups:
-// 72cca882-77a8-4061-b3ca-df68b72643af
-// 1e71f90c-fff3-4ebc-9ca0-2db81d6158d9
-// 4d7f7985-1826-4697-ae43-88c7554c4a8b
-// ea554fec-600b-4919-9547-59d940ebb0fc
-// 51f54a87-1552-4321-b741-6aa859d15d5b
-// 7fa44dc4-e75b-4b15-8e10-15cfe7b50688
-// 85f33a7c-2c14-4713-8d54-8ed7538d3c6e
-// 9436a03b-e50a-4bbb-a2b8-f0cdbebed96c
-// 805467f3-0b93-4ce0-a67f-05122b642c9f
-// e33d6e81-1d9c-4ec0-9895-e22ce4befe7b
-// fcf5c4a4-b09b-4f28-b50c-0892626fe07a
-// eca9f408-1479-4b7b-a729-186c3d5a548d
-// 803d34e0-7be0-4568-922a-08ff85c6a4ea
-// bdea95cc-230a-448e-8312-bef3bbb3c8ea
-
 Sounds = new Mongo.Collection('sounds');
 Meteor.subscribe('soundsPublications');
 
@@ -213,7 +197,7 @@ Template.grabData.events({
         console.log(results);
       }
     });
-  }
+  },
   'click #SAPLoad': function(event) {
     console.log("SAP");
     try {

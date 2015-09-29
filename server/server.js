@@ -316,14 +316,15 @@ Meteor.methods({
   },
   'history': function(token, clientID, GroupID) {
     var results;
-    var url = 'https://data.relayr.io/device-data/history/groups/'+GroupID;
+    var url = 'https://data.relayr.io/experimental/device-data/history/groups/'+GroupID
     HTTP.call('GET', url, {
       headers: {
         "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
         "Content-Type": 'application/json'
       },
-      data: {
-        "start":
+      params: {
+        "start": "1443514965",
+        "sample": "1h"
       }
     }, function(err, result) {
       if (!err) {
