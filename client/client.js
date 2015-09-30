@@ -78,7 +78,7 @@ Template.grabData.events({
     // var readingType = document.getElementById("selectReadingType").value
     var clientID = "1e76f397-c940-4f88-a439-cfb4c950329d"
     var applicationID = "a683462a-9b29-453d-ab58-ef96293c70e4"
-      // var deviceID = "85fa69d0-8bb5-4400-94ea-ede7f960ca64"
+    // var deviceID = "85fa69d0-8bb5-4400-94ea-ede7f960ca64"
     var token = "1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV"
     var htu = "85fa69d0-8bb5-4400-94ea-ede7f960ca64";
     var snd = "038d8561-5e1e-43ac-b504-48df027a1d9e";
@@ -143,33 +143,18 @@ Template.grabData.events({
           results = results['data'];
           GroupID = results['id'];
           console.log("ID:" + GroupID);
-          alert("Group with credentials created:\n" + "id: " + results['id'] + "\n name: " + results['name'] + "\nowner: " + results['owner']);
+          alert("Group with credentials created:\n" + "id: " + results['id'] + "\nname: " + results['name'] + "\nowner: " + results['owner']);
         }
       })
       Created = true;
       document.getElementById('group').innerHTML = "Group info";
     } else {
       Meteor.call('getGroup', token, clientID, GroupID, function(err, results) {
-        if(!err){
-          console.log(results);
-        }
-      });
-    }
-  },
-  'click #deleteGroups': function(event) {
-    try {
-      console.log("trying to delete groups");
-      var clientID = "1e76f397-c940-4f88-a439-cfb4c950329d";
-      var token = "1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV";
-      Meteor.call('deleteGroups', token, clientID, function(err, results) {
         if (!err) {
           console.log(results);
-          alert("Deleted all groups!")
-          document.getElementById('group').innerHTML = "1. Create group";
+          alert("Group information:\nName:"+results['name']+"\nDevice count: "+results['devices'].length);
         }
       });
-    } catch (e) {
-      console.log(e);
     }
   },
   'click #additems': function(event) {
@@ -189,14 +174,33 @@ Template.grabData.events({
       }
     })
   },
-  'click #history': function(event){
+  'click #history': function(event) {
     var clientID = "1e76f397-c940-4f88-a439-cfb4c950329d";
     var token = "1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV";
-    Meteor.call('history', token, clientID, GroupID, function(err, results){
-      if(!err){
-        console.log(results);
+    Meteor.call('history', token, clientID, GroupID, function(err, results) {
+      if (!err) {
+        var hist = JSON.parse(results['content']);
+        for (var i = 0; i < hist.length; i++) {
+          console.log("Meaning: "+hist[i]['meaning']+"\nID: "+hist[i]['deviceId']);
+        }
       }
     });
+  },
+  'click #deleteGroups': function(event) {
+    try {
+      var clientID = "1e76f397-c940-4f88-a439-cfb4c950329d";
+      var token = "1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV";
+      Meteor.call('deleteGroups', token, clientID, function(err, results) {
+        if (!err && results == "204") {
+          console.log(results);
+          alert("Deleted all groups!")
+          document.getElementById('group').innerHTML = "1. Create group";
+          Created=false;
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
   },
   'click #SAPLoad': function(event) {
     console.log("SAP");

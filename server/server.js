@@ -253,7 +253,6 @@ Meteor.methods({
       stopData = false;
     }
   },
-
   'close_connection': function(token, clientID) {
     // var Relayr = Meteor.npmRequire('relayr')
     // var relayr = new Relayr();
@@ -276,26 +275,20 @@ Meteor.methods({
     });
     return toReturn;
   },
-  'deleteGroups': function(token, clientID) {
-    try {
-      console.log(" to delete groups");
-      var toReturn;
-      toReturn = HTTP.call('DELETE', 'https://api.relayr.io/users/' + clientID + '/groups/ ', {
-        headers: {
-          "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
-          "Content-Type": 'application/json'
-        }
-      });
-      return toReturn;
-    } catch (e) {
-      console.log(e);
-      return e;
-    }
+  'getGroup': function(token, clientID, GroupID) {
+    var url = 'https://api.relayr.io/groups/'+GroupID;
+    var ciorba = HTTP.call('GET', url, {
+      headers: {
+        "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
+        "Content-Type": 'application/json'
+      }
+    });
+    console.log(ciorba['data']);
+    return ciorba['data'];
   },
   'additems': function(token, deviceIDs, clientID, GroupID) {
-    var results = {};
     var url = 'https://api.relayr.io/groups/'+GroupID;
-    HTTP.call('POST', url, {
+    var results = HTTP.call('POST', url, {
       headers: {
         "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
         "Content-Type": 'application/json'
@@ -303,21 +296,12 @@ Meteor.methods({
       data: {
         "deviceIds": [deviceIDs['tempSensor1'], deviceIDs['tempSensor2']]
       }
-    }, function(err, result) {
-      if (!err) {
-        console.log(result);
-        results = result;
-      } else {
-        console.log(err);
-        return err;
-      }
     });
-    return results;
+    return results['statusCode'];
   },
   'history': function(token, clientID, GroupID) {
-    var results;
-    var url = 'https://data.relayr.io/experimental/device-data/history/groups/'+GroupID
-    HTTP.call('GET', url, {
+    var url = 'https://data.relayr.io/experimental/device-data/history/groups/'+GroupID;
+    var results = HTTP.call('GET', url, {
       headers: {
         "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
         "Content-Type": 'application/json'
@@ -326,35 +310,24 @@ Meteor.methods({
         "start": "1443514965",
         "sample": "1h"
       }
-    }, function(err, result) {
-      if (!err) {
-        console.log(result);
-        results = result;
-      } else {
-        console.log(err);
-        return err;
-      }
     });
     return results;
   },
-  'getGroup': function(token, clientID, GroupID) {
-    var results;
-    var url = 'https://api.relayr.io/groups/'+GroupID;
-    HTTP.call('GET', url, {
-      headers: {
-        "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
-        "Content-Type": 'application/json'
-      }
-    }, function(err, result) {
-      if (!err) {
-        console.log(result);
-        results = result;
-      } else {
-        console.log(err);
-        return err;
-      }
-    });
-    return results;
+  'deleteGroups': function(token, clientID) {
+    try {
+      var toReturn;
+      toReturn = HTTP.call('DELETE', 'https://api.relayr.io/users/' + clientID + '/groups/ ', {
+        headers: {
+          "Authorization": "Bearer 1.t.wrb-k1N3hc5AR8uClh0elTZO-5HV",
+          "Content-Type": 'application/json'
+        }
+      });
+      console.log(toReturn);
+      return toReturn['statusCode'];
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
   },
   'upload_to_sap': function() {
     // HTTP.call('POST', 'http://10.157.128.43:8000/sap/bc/soap/rfc?sap-client=600', {
