@@ -272,6 +272,7 @@ function ciorba(data){
        },
 
        yAxis: {
+         allowDecimals: true,
            title: {
                text: 'Nuclear weapon states'
            },
